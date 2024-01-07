@@ -1,13 +1,13 @@
-## Node Password Manager
+# Node Password Manager
 
 A password managemnent API to keep your password in a safe place.
 
-# Functionalities
+## Functionalities
 
 User system: You need to be logged in the API to use it.
 You can save password and recover them. They are crypted in the database.
 
-# Setup
+## Setup
 
 1. First, install MariaDB (at least version 10.5) and Node JS 20.10.0.
 
@@ -39,13 +39,13 @@ npm i
 ````
 You're done !
 
-# Run
+## Run
 
 You can run this command to run the NodeJS application :
 ````
 node app.js
 ````
 
-# Authors
+## Authors
 
 @Namularbre

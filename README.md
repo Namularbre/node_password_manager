@@ -47,4 +47,4 @@ node app.js
 
 ## Authors
 
-@Namularbre
+- [Namularbre](https://github.com/Namularbre)

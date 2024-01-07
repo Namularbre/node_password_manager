@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 
 /**
- * @desc Generate a random password
+ * Generate a random password
  * @param length {number}
  * @returns {Promise<string>}
  */

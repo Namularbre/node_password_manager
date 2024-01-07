@@ -1,25 +1,24 @@
 const db = require('../utils/database');
-const passwordGenerator = require('../utils/passwordGenerator');
 
 class PasswordModel {
     /**
      *
      * @param site {string}
      * @param idUser {number}
+     * @param password {string}
+     * @param initialisationVector {string}
      * @returns {Promise<number>}
      */
-    static async insert(site, idUser) {
+    static async insert(site, idUser, password, initialisationVector) {
         let conn;
         let row;
 
         try {
-            const generatedPassword = await passwordGenerator();
-
             conn = await db.getConnection();
             row = await conn.query(`
-                INSERT INTO passwords (site, password, idUser)
-                VALUE (?, ?, ?);
-            `, [site, generatedPassword, idUser]);
+                INSERT INTO passwords (site, password, initialisationVector, idUser)
+                VALUE (?, ?, ?, ?);
+            `, [site, password, initialisationVector, idUser]);
         } catch(error) {
             console.error(error.message);
             throw new Error('DB_ERROR');
@@ -43,7 +42,7 @@ class PasswordModel {
         try {
             conn = await db.getConnection();
             results = await conn.query(`
-                SELECT idPassword, site, password, idUser
+                SELECT idPassword, site, password, idUser, initialisationVector
                 FROM passwords
                 WHERE idUser = ? AND site = ?;
             `, [idUser, site]);

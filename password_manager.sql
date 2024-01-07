@@ -6,11 +6,12 @@ CREATE TABLE `users` (
     `password` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_general_ci',
     `email` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
     PRIMARY KEY (`idUser`) USING BTREE,
-    UNIQUE INDEX `username` (`username`) USING BTREE
+    UNIQUE INDEX `username` (`username`) USING BTREE,
+    UNIQUE INDEX `email` (`email`) USING BTREE
 )
     COLLATE='utf8mb4_general_ci'
     ENGINE=InnoDB
-    AUTO_INCREMENT=6
+    AUTO_INCREMENT=8
 ;
 
 CREATE TABLE `passwords` (

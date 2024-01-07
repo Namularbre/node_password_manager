@@ -1,7 +1,7 @@
 const argon2 = require('argon2');
 
 /**
- * @desc Hash a plain text
+ * Hash a plain text
  * @param plain {string}
  * @returns {Promise<string|null>}
  */
@@ -15,7 +15,7 @@ async function hash(plain) {
 }
 
 /**
- * @desc compare a plain text with a hashed one
+ * Compare a plain text with a hashed one
  * @param plain {string}
  * @param hash {string}
  * @returns {Promise<boolean>}

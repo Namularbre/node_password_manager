@@ -9,10 +9,10 @@ const hashing = require('../utils/hashing');
  * @returns {Promise<void>}
  */
 async function login(req, res, next) {
-    const {username, password} = req.body;
+    const {username, password, email} = req.body;
 
-    if (username, password) {
-        const user = await UserModel.find(username);
+    if (username && password && email) {
+        const user = await UserModel.find(username, email);
 
         if (user.length !== 0) {
             const hashedPassword = user[0].password;

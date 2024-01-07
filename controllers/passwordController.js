@@ -1,4 +1,6 @@
 const PasswordModel = require('../models/passwordModel');
+const passwordGenerator = require("../utils/passwordGenerator");
+const {encrypt, decrypt} = require("../utils/encryption");
 
 class PasswordController {
     /**
@@ -16,7 +18,10 @@ class PasswordController {
                 const sites = await PasswordModel.select(site, idUser);
 
                 if (sites.length === 0) {
-                    const idPassword = await PasswordModel.insert(site, idUser);
+                    const generatedPassword = await passwordGenerator();
+                    const encrypted = await encrypt(generatedPassword);
+
+                    const idPassword = await PasswordModel.insert(site, idUser, encrypted.encryptedPassword, encrypted.initialisationVector);
 
                     res.send({
                         site: site,
@@ -47,8 +52,20 @@ class PasswordController {
 
         if (site) {
             try {
-                const password = await PasswordModel.select(site, idUser);
-                res.send(password);
+                const passwordEntry = await PasswordModel.select(site, idUser);
+
+                if (passwordEntry.length !== 0) {
+                    const decryptedPassword = await decrypt(passwordEntry[0].password, passwordEntry[0].initialisationVector);
+
+                    res.send({
+                        idPassword: passwordEntry[0].idPassword,
+                        site: passwordEntry[0].site,
+                        password: decryptedPassword,
+                        idUser: passwordEntry[0].idUser
+                    });
+                } else {
+                    res.status(404).send({message: "Unknown site."});
+                }
             } catch(error) {
                 console.error(error.message);
                 res.status(500).send({message: "Internal server error"});

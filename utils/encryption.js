@@ -1,5 +1,10 @@
 const crypto = require('crypto');
 
+/**
+ *
+ * @param password {string}
+ * @returns {Promise<{initialisationVector: string, encryptedPassword: string}>}
+ */
 async function encrypt(password) {
     try {
         const initialisationVector = crypto.randomBytes(16);
@@ -14,6 +19,12 @@ async function encrypt(password) {
     }
 }
 
+/**
+ *
+ * @param encryptedPassword {string}
+ * @param initialisationVector {string}
+ * @returns {Promise<string>}
+ */
 async function decrypt(encryptedPassword, initialisationVector) {
     try {
         const apiSecretKey = Buffer.from(process.env.API_SECRET_KEY, 'hex');

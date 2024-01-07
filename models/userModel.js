@@ -9,7 +9,7 @@ class UserModel {
      * @param email {string|null}
      * @returns {Promise<number>}
      */
-    static async insert(username, password, email = null) {
+    static async insert(username, password, email) {
         let conn;
         let row;
 
@@ -38,9 +38,10 @@ class UserModel {
     /**
      *
      * @param username {string}
+     * @param email {string}
      * @returns {Promise<Object[]>}
      */
-    static async find(username) {
+    static async find(username, email) {
         let conn;
         let result;
 
@@ -49,8 +50,8 @@ class UserModel {
             result = await conn.query(`
                 SELECT idUser, username, password, email
                 FROM users
-                WHERE username = ?;
-            `, [username]);
+                WHERE username = ? OR email = ?;
+            `, [username, email]);
         } catch (error) {
             console.error(error.message);
             throw new Error('DB_ERROR');

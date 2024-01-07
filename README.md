@@ -1,15 +1,15 @@
 # Node Password Manager
 
-A password managemnent API to keep your password in a safe place.
+A password management API to keep your password in a safe place.
 
 ## Functionalities
 
 User system: You need to be logged in the API to use it.
-You can save password and recover them. They are crypted in the database.
+You can save password and recover them. They are encrypted in the database.
 
 ## Setup
 
-1. First, install MariaDB (at least version 10.5) and Node JS 20.10.0.
+1. First, install MariaDB (at least version 10.5) and Node.js 20.10.0.
 
 2. Run the password_manager.sql script to create the database.
 
@@ -17,7 +17,7 @@ You can save password and recover them. They are crypted in the database.
 
 4. Next, clone the repository or download the code and extract it somewhere.
 
-5. Create a .env file, with this information:
+5. Create a .env file from this model:
 
 ````
 DBHOST=your_db_host
@@ -37,11 +37,10 @@ Install the dependencies with :
 ````
 npm i
 ````
-You're done !
 
 ## Run
 
-You can run this command to run the NodeJS application :
+You can run this command to run the Node.js application :
 ````
 node app.js
 ````

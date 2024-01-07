@@ -59,17 +59,6 @@ class PasswordModel {
     /**
      *
      * @param site {string}
-     * @param password {string}
-     * @param idUser {number}
-     * @returns {Promise<Object>}
-     */
-    static async update(site, password, idUser) {
-        throw new Error('NOT_IMPLEMENTED'); //TODO: implements
-    }
-
-    /**
-     *
-     * @param site {string}
      * @param idUser {number}
      * @returns {Promise<Object>}
      */

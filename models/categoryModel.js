@@ -40,7 +40,7 @@ class CategoryModel {
             conn = await db.getConnection();
             results = await conn.query(`
                 SELECT idCategory, name
-                FROM categories c
+                FROM categories
                 WHERE idUser = ?;
             `, [idUser]);
         } catch (error) {
@@ -58,7 +58,7 @@ class CategoryModel {
      * @param idCategory {number}
      * @param name {string}
      * @param idUser {number}
-     * @returns {Promise<Object>}
+     * @returns {Promise<boolean>}
      */
     static async update(idCategory, name, idUser){
         let conn;
@@ -78,14 +78,14 @@ class CategoryModel {
             if (conn) await conn.release();
         }
 
-        return row;
+        return (row.affectedRows === 1);
     }
 
     /**
      *
      * @param idCategory {number}
      * @param idUser {number}
-     * @returns {Promise<Object>}
+     * @returns {Promise<boolean>}
      */
     static async delete(idCategory, idUser){
         let conn;
@@ -104,7 +104,7 @@ class CategoryModel {
             if (conn) await conn.release();
         }
 
-        return row;
+        return (row.affectedRows === 1);
     }
 }
 

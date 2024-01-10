@@ -13,11 +13,11 @@ app.use(log);
 
 const userRouter = require('./routers/userRouter');
 const passwordRouter = require('./routers/passwordRouter');
-
-const {log} = require('./middlewares/log');
+const categoryRouter = require('./routers/categoryRouter');
 
 app.use('/users', userRouter);
 app.use('/passwords', passwordRouter);
+app.use('/categories', categoryRouter);
 
 app.get('/', log, (req, res) => {
     res.send({message: 'ok'});

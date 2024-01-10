@@ -2,12 +2,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 require('dotenv').config();
+const {log} = require('./middlewares/log');
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(helmet());
+app.use(log);
 
 const userRouter = require('./routers/userRouter');
 const passwordRouter = require('./routers/passwordRouter');

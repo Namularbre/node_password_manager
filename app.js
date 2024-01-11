@@ -9,7 +9,10 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(helmet());
-app.use(log);
+
+if (process.env.ENV !== 'prod') {
+    app.use(log);
+}
 
 const userRouter = require('./routers/userRouter');
 const passwordRouter = require('./routers/passwordRouter');

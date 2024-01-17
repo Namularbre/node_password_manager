@@ -20,11 +20,29 @@ CREATE TABLE `passwords` (
     `password` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_general_ci',
     `initialisationVector` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_general_ci',
     `idUser` INT(11) NOT NULL,
+    `idCategory` INT(11) NULL DEFAULT NULL,
     PRIMARY KEY (`idPassword`) USING BTREE,
     INDEX `FK_users_passwords` (`idUser`) USING BTREE,
+    INDEX `FK_categories_passwords` (`idCategory`) USING BTREE,
+    CONSTRAINT `FK_categories_passwords` FOREIGN KEY (`idCategory`) REFERENCES `categories` (`idCategory`) ON UPDATE NO ACTION ON DELETE NO ACTION,
     CONSTRAINT `FK_users_passwords` FOREIGN KEY (`idUser`) REFERENCES `users` (`idUser`) ON UPDATE NO ACTION ON DELETE NO ACTION
 )
     COLLATE='utf8mb4_general_ci'
     ENGINE=InnoDB
-    AUTO_INCREMENT=7
+    AUTO_INCREMENT=9
 ;
+
+CREATE TABLE `categories` (
+    `idCategory` INT(11) NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_general_ci',
+    `idUser` INT(11) NULL DEFAULT NULL,
+    PRIMARY KEY (`idCategory`) USING BTREE,
+    INDEX `FK_users_categories` (`idUser`) USING BTREE,
+    CONSTRAINT `FK_users_categories` FOREIGN KEY (`idUser`) REFERENCES `users` (`idUser`) ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+    COMMENT='categories'
+    COLLATE='utf8mb4_general_ci'
+    ENGINE=InnoDB
+    AUTO_INCREMENT=4
+;
+

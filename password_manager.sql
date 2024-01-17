@@ -46,3 +46,9 @@ CREATE TABLE `categories` (
     AUTO_INCREMENT=4
 ;
 
+CREATE TRIGGER `delete_user_trigger`
+    BEFORE DELETE ON `users` FOR EACH ROW
+BEGIN
+    DELETE FROM `passwords` WHERE `idUser` = OLD.`idUser`;
+    DELETE FROM `categories` WHERE `idUser` = OLD.`idUser`;
+END 

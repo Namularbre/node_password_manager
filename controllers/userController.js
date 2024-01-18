@@ -1,4 +1,5 @@
 const UserModel = require('../models/userModel');
+const hashing = require("../utils/hashing");
 
 class UserController {
     /**
@@ -31,6 +32,35 @@ class UserController {
             }
         } else {
             res.status(400).send({message: "Missing username, password or email in request payload."});
+        }
+    }
+
+    /**
+     *
+     * @param req {Request}
+     * @param res {Response}
+     * @returns {Promise<void>}
+     */
+    static async login(req, res) {
+        const {username, password, email} = req.body;
+
+        if (username && password && email) {
+            const user = await UserModel.find(username, email);
+
+            if (user.length !== 0) {
+                const hashedPassword = user[0].password;
+
+                if (await hashing.compare(password, hashedPassword)) {
+                    res.send(user[0]);
+                } else {
+                    res.status(401).send({message: "Unknown user."});
+                }
+            } else {
+                res.status(401).send({message: "Unknown user."});
+            }
+
+        } else {
+            res.status(401).send({message: "You need to be connected in order to do this command"});
         }
     }
 }

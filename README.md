@@ -27,6 +27,11 @@ DBPASS=1234
 
 API_SECRET_KEY=aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899
 
+ENV=prod
+
+HOST=127.0.0.1
+PORT=3000
+
 ````
 
 Note: Don't share the content of your .env in any context, it contains the password encryption key and the information of the user of your database, with access to your saved password !

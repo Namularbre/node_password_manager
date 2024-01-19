@@ -51,7 +51,11 @@ class UserController {
                 const hashedPassword = user[0].password;
 
                 if (await hashing.compare(password, hashedPassword)) {
-                    res.send(user[0]);
+                    res.send({
+                        idUser: user[0].idUser,
+                        username: user[0].username,
+                        email: user[0].email,
+                    });
                 } else {
                     res.status(401).send({message: "Unknown user."});
                 }

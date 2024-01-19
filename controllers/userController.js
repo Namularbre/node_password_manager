@@ -55,6 +55,7 @@ class UserController {
                         idUser: user[0].idUser,
                         username: user[0].username,
                         email: user[0].email,
+                        password: password
                     });
                 } else {
                     res.status(401).send({message: "Unknown user."});

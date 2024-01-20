@@ -36,7 +36,11 @@ PORT=3000
 
 Note: Don't share the content of your .env in any context, it contains the password encryption key and the information of the user of your database, with access to your saved password !
 
-6. CHANGE THE API_SECRET_KEY with something with the same size, but random content.
+6. CHANGE THE API_SECRET_KEY with something with the same size, but random content. You can use gen_key to create such key with the command by copying the output in the console.
+
+````
+node gen_key.js
+````
 
 Install the dependencies with :
 ````

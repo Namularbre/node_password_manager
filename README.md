@@ -42,7 +42,7 @@ Note: Don't share the content of your .env in any context, it contains the passw
 node gen_key.js
 ````
 
-Install the dependencies with :
+7. Install the dependencies with :
 ````
 npm i
 ````

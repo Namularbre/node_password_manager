@@ -81,6 +81,34 @@ class PasswordModel {
 
         return row;
     }
+
+    /**
+     *
+     * @param site {string}
+     * @param idUser {number}
+     * @param newPassword {string}
+     * @returns {Promise<*>}
+     */
+    static async update(site, idUser, newPassword) {
+        let conn;
+        let row;
+
+        try {
+            conn = await db.getConnection();
+            row = await conn.query(`
+                UPDATE passwords
+                SET password = ?
+                WHERE site = ? AND idUser = ?;
+            `, [newPassword, site, idUser]);
+        } catch (error) {
+            console.error(error.message);
+            throw new Error('DB_ERROR');
+        } finally {
+            if (conn) await conn.release();
+        }
+
+        return (row.affectedRows !== 0);
+    }
 }
 
 module.exports = PasswordModel;

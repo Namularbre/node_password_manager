@@ -8,6 +8,7 @@ passwordRouter
     .route('/:site')
     .post(login, PasswordController.post)
     .get(login, PasswordController.get)
-    .delete(login, PasswordController.delete);
+    .delete(login, PasswordController.delete)
+    .put(login, PasswordController.put)
 
 module.exports = passwordRouter;

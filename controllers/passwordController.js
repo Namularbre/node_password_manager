@@ -112,7 +112,7 @@ class PasswordController {
             try {
                 const passwordEntry = await PasswordModel.select(site, idUser);
 
-                if (passwordEntry) {
+                if (passwordEntry.length !== 0) {
                     const update = await PasswordModel.update(site, idUser, newPassword);
                     res.send(update);
                 } else {

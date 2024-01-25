@@ -97,6 +97,36 @@ class PasswordController {
             res.status(400).send({message: "Missing site in request payload."});
         }
     }
+
+    /**
+     *
+     * @param req {Request}
+     * @param res {Response}
+     * @returns {Promise<void>}
+     */
+    static async put(req, res) {
+        const {site} = req.params;
+        const {idUser, newPassword} = req.body;
+
+        if (idUser && newPassword) {
+            try {
+                const passwordEntry = await PasswordModel.select(site, idUser);
+
+                if (passwordEntry) {
+                    const update = await PasswordModel.update(site, idUser, newPassword);
+                    res.send(update);
+                } else {
+                    res.status(404).send({message: "Site not found."});
+                }
+            } catch(error) {
+                console.error(error.message);
+                res.status(500).send({message: "Internal server error."});
+            }
+        } else {
+            res.status(400).send({message: "Missing site in request payload."});
+        }
+    }
+
 }
 
 module.exports = PasswordController;

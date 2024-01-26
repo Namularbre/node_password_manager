@@ -9,6 +9,10 @@ passwordRouter
     .post(login, PasswordController.post)
     .get(login, PasswordController.get)
     .delete(login, PasswordController.delete)
-    .put(login, PasswordController.put)
+    .put(login, PasswordController.put);
+
+passwordRouter
+    .route('/all/:idUser')
+    .get(login, PasswordController.index);
 
 module.exports = passwordRouter;

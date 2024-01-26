@@ -9,6 +9,29 @@ class PasswordController {
      * @param res {Response}
      * @returns {Promise<void>}
      */
+    static async index(req, res) {
+        const {idUser} = req.params;
+
+        if (idUser) {
+            try {
+                const passwords = await PasswordModel.selectAll(idUser);
+
+                res.send(passwords);
+            } catch(error) {
+                console.error(error.message);
+                res.status(500).send({message: "Internal server error."});
+            }
+        } else {
+            res.status(400).send({message: "Missing site in request payload."});
+        }
+    }
+
+    /**
+     *
+     * @param req {Request}
+     * @param res {Response}
+     * @returns {Promise<void>}
+     */
     static async post(req, res) {
         const {idUser} = req.body;
         const {site} = req.params;

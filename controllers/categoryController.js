@@ -8,7 +8,7 @@ class CategoryController {
      * @returns {Promise<void>}
      */
     static async get(req, res) {
-        const {idUser} = req.body;
+        const {idUser} = req.params;
 
         if (idUser) {
             try {

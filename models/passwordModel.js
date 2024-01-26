@@ -3,6 +3,32 @@ const db = require('../utils/database');
 class PasswordModel {
     /**
      *
+     * @param idUser {number}
+     * @returns {Promise<any>}
+     */
+    static async selectAll(idUser) {
+        let conn;
+        let result;
+
+        try {
+            conn = await db.getConnection();
+            result = conn.query(`
+                SELECT idPassword, site, password, idUser, idCategory
+                FROM passwords
+                WHERE idUser = ?;
+            `, [idUser]);
+        } catch (error) {
+            console.error(error.message);
+            throw new Error('DB_ERROR');
+        } finally {
+            if (conn) await conn.release();
+        }
+
+        return result;
+    }
+
+    /**
+     *
      * @param site {string}
      * @param idUser {number}
      * @param password {string}

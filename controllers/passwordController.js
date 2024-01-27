@@ -36,7 +36,7 @@ class PasswordController {
         const {idUser} = req.body;
         const {site} = req.params;
 
-        if (site) {
+        if (site && idUser) {
             try {
                 const sites = await PasswordModel.select(site, idUser);
 
@@ -59,7 +59,7 @@ class PasswordController {
                 res.status(500).send({message: "Internal server error"});
             }
         } else {
-            res.status(400).send({message: "Missing site in request payload."});
+            res.status(400).send({message: "Missing idUser in request payload."});
         }
     }
 

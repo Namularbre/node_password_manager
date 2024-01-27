@@ -1,5 +1,6 @@
 const UserModel = require('../models/userModel');
 const hashing = require("../utils/hashing");
+const {generateToken} = require('../utils/generateToken');
 
 class UserController {
     /**
@@ -17,11 +18,11 @@ class UserController {
 
                 if (user.length === 0) {
                     const idUser = await UserModel.insert(username, password, email);
+                    const token = await generateToken(username, email);
+
                     res.send({
                         idUser: idUser,
-                        username: username,
-                        password: password,
-                        email: email
+                        jwt: token,
                     });
                 } else {
                     res.status(401).send({message: 'Username or email already exists.'});
@@ -51,11 +52,10 @@ class UserController {
                 const hashedPassword = user[0].password;
 
                 if (await hashing.compare(password, hashedPassword)) {
+                    const token = await generateToken(username, email);
                     res.send({
                         idUser: user[0].idUser,
-                        username: user[0].username,
-                        email: user[0].email,
-                        password: password
+                        jwt: token
                     });
                 } else {
                     res.status(401).send({message: "Unknown user."});

@@ -13,7 +13,7 @@ CREATE TABLE `users` (
 )
     COLLATE='utf8mb4_general_ci'
     ENGINE=InnoDB
-    AUTO_INCREMENT=8
+    AUTO_INCREMENT=1
 ;
 
 CREATE TABLE `passwords` (
@@ -31,21 +31,28 @@ CREATE TABLE `passwords` (
 )
     COLLATE='utf8mb4_general_ci'
     ENGINE=InnoDB
-    AUTO_INCREMENT=9
+    AUTO_INCREMENT=1
 ;
 
 CREATE TABLE `categories` (
     `idCategory` INT(11) NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_general_ci',
-    `idUser` INT(11) NULL DEFAULT NULL,
-    PRIMARY KEY (`idCategory`) USING BTREE,
-    INDEX `FK_users_categories` (`idUser`) USING BTREE,
-    CONSTRAINT `FK_users_categories` FOREIGN KEY (`idUser`) REFERENCES `users` (`idUser`) ON UPDATE NO ACTION ON DELETE NO ACTION
+    PRIMARY KEY (`idCategory`) USING BTREE
 )
     COMMENT='categories'
     COLLATE='utf8mb4_general_ci'
     ENGINE=InnoDB
-    AUTO_INCREMENT=4
+    AUTO_INCREMENT=1
+;
+
+INSERT INTO categories (idCategory, name) VALUES
+    (1, 'Social Networks'),
+    (2, 'Work'),
+    (3, 'Administation'),
+    (4, 'Bank'),
+    (5, 'Games'),
+    (6, 'Messaging'),
+    (7, 'Others')
 ;
 
 CREATE TRIGGER `delete_user_trigger`

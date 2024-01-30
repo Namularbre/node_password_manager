@@ -14,7 +14,7 @@ categoryRouter
     .delete(login, CategoryController.delete);
 
 categoryRouter
-    .route('/:idUser')
+    .route('/all')
     .get(login, CategoryController.get);
 
 module.exports = categoryRouter;

@@ -4,19 +4,18 @@ class CategoryModel {
     /**
      *
      * @param name {string}
-     * @param idUser {number}
      * @returns {Promise<number>}
      */
-    static async insert(name, idUser) {
+    static async insert(name) {
         let conn;
         let row;
 
         try {
             conn = await db.getConnection();
             row = await conn.query(`
-                INSERT INTO categories (name, idUser)
-                VALUE (?, ?);
-            `, [name, idUser]);
+                INSERT INTO categories (name)
+                VALUE (?);
+            `, [name]);
         } catch (error) {
             console.error(error.message);
             throw new Error('DB_ERROR');
@@ -29,10 +28,9 @@ class CategoryModel {
 
     /**
      *
-     * @param idUser {number}
      * @returns {Promise<Object[]>}
      */
-    static async selectByUser(idUser) {
+    static async selectAll() {
         let conn;
         let results;
 
@@ -40,9 +38,8 @@ class CategoryModel {
             conn = await db.getConnection();
             results = await conn.query(`
                 SELECT idCategory, name
-                FROM categories
-                WHERE idUser = ?;
-            `, [idUser]);
+                FROM categories;
+            `);
         } catch (error) {
             console.error(error.message);
             throw new Error('DB_ERROR');
@@ -57,10 +54,9 @@ class CategoryModel {
      *
      * @param idCategory {number}
      * @param name {string}
-     * @param idUser {number}
      * @returns {Promise<boolean>}
      */
-    static async update(idCategory, name, idUser){
+    static async update(idCategory, name){
         let conn;
         let row;
 
@@ -69,8 +65,8 @@ class CategoryModel {
             row = await conn.query(`
                 UPDATE categories
                 SET name = ?
-                WHERE idCategory = ? AND idUser = ?;
-            `, [name, idCategory, idUser]);
+                WHERE idCategory = ?;
+            `, [name, idCategory]);
         } catch (error) {
             console.error(error.message);
             throw new Error('DB_ERROR');
@@ -84,10 +80,9 @@ class CategoryModel {
     /**
      *
      * @param idCategory {number}
-     * @param idUser {number}
      * @returns {Promise<boolean>}
      */
-    static async delete(idCategory, idUser){
+    static async delete(idCategory){
         let conn;
         let row;
 
@@ -95,8 +90,8 @@ class CategoryModel {
             conn = await db.getConnection();
             row = await conn.query(`
                 DELETE FROM categories
-                WHERE idCategory = ? AND idUser = ?;
-            `, [idCategory, idUser]);
+                WHERE idCategory = ?;
+            `, [idCategory]);
         } catch (error) {
             console.error(error.message);
             throw new Error('DB_ERROR');

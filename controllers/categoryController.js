@@ -8,18 +8,12 @@ class CategoryController {
      * @returns {Promise<void>}
      */
     static async get(req, res) {
-        const {idUser} = req.params;
-
-        if (idUser) {
-            try {
-                const categories = await CategoryModel.selectByUser(idUser);
-                res.send(categories);
-            } catch(error) {
-                console.error(error.message);
-                res.status(500).send({message: 'Internal server error'});
-            }
-        } else {
-            res.status(400).send({message: 'Missing idUser in request payload'});
+        try {
+            const categories = await CategoryModel.selectAll();
+            res.send(categories);
+        } catch(error) {
+            console.error(error.message);
+            res.status(500).send({message: 'Internal server error'});
         }
     }
 
@@ -30,23 +24,22 @@ class CategoryController {
      * @returns {Promise<void>}
      */
     static async post(req, res) {
-        const {idUser, name} = req.body;
+        const {name} = req.body;
 
-        if (idUser && name) {
+        if (name) {
             try {
-                const idCategory = await CategoryModel.insert(name, idUser);
+                const idCategory = await CategoryModel.insert(name);
 
                 res.send({
                     idCategory: idCategory,
-                    name: name,
-                    idUser: idUser
+                    name: name
                 });
             } catch(error) {
                 console.error(error.message);
                 res.status(500).send({message: 'Internal server error'});
             }
         } else {
-            res.status(400).send({message: 'Missing idUser and name in request.'});
+            res.status(400).send({message: 'Missing name in request.'});
         }
     }
 
@@ -57,12 +50,12 @@ class CategoryController {
      * @returns {Promise<void>}
      */
     static async put(req, res) {
-        const {idUser, name} = req.body;
+        const {name} = req.body;
         const {idCategory} = req.params;
 
-        if (name && idUser) {
+        if (name) {
             try {
-                const update = await CategoryModel.update(idCategory, name, idUser);
+                const update = await CategoryModel.update(idCategory, name);
 
                 res.send(update);
             } catch(error) {
@@ -70,7 +63,7 @@ class CategoryController {
                 res.status(500).send({message: 'Internal server error'});
             }
         } else {
-            res.status(400).send({message: 'Missing idUser and name in request.'});
+            res.status(400).send({message: 'Missing name in request.'});
         }
     }
 
@@ -81,19 +74,14 @@ class CategoryController {
      * @returns {Promise<void>}
      */
     static async delete(req, res) {
-        const {idUser} = req.body;
         const {idCategory} = req.params;
 
-        if (idUser) {
-            try {
-                const update = await CategoryModel.delete(idCategory, idUser);
-                res.send(update);
-            } catch(error) {
-                console.error(error.message);
-                res.status(500).send({message: 'Internal server error'});
-            }
-        } else {
-            res.status(400).send({message: 'Missing idUser and name in request.'});
+        try {
+            const update = await CategoryModel.delete(idCategory);
+            res.send(update);
+        } catch(error) {
+            console.error(error.message);
+            res.status(500).send({message: 'Internal server error'});
         }
     }
 }

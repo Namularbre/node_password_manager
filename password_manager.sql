@@ -37,7 +37,8 @@ CREATE TABLE `passwords` (
 CREATE TABLE `categories` (
     `idCategory` INT(11) NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_general_ci',
-    PRIMARY KEY (`idCategory`) USING BTREE
+    PRIMARY KEY (`idCategory`) USING BTREE,
+    UNIQUE INDEX `name` (`name`) USING BTREE
 )
     COMMENT='categories'
     COLLATE='utf8mb4_general_ci'

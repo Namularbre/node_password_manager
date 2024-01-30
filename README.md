@@ -32,6 +32,8 @@ ENV=prod
 HOST=127.0.0.1
 PORT=3000
 
+TOKEN_SECRET=baeb6784dad4bc49a6ca90981cd9a236aac4c34c0797971f836603825cd4e058631a3ee26aaa7dcd521f0f4e7e6843942e97c7fa65980c89980864f3ed5715b5
+
 ````
 
 Note: Don't share the content of your .env in any context, it contains the password encryption key and the information of the user of your database, with access to your saved password !
@@ -42,7 +44,9 @@ Note: Don't share the content of your .env in any context, it contains the passw
 node gen_key.js
 ````
 
-7. Install the dependencies with :
+7. Do the same with TOKEN_SECRET
+
+8. Install the dependencies with :
 ````
 npm i
 ````

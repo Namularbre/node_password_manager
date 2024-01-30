@@ -32,6 +32,29 @@ class PasswordController {
      * @param res {Response}
      * @returns {Promise<void>}
      */
+    static async search(req, res) {
+        const {idUser} = req.body;
+        const {site} = req.params;
+
+        if (site && idUser) {
+            const passwords = await PasswordModel.search(site, idUser);
+
+            if (passwords.length !== 0) {
+                res.send(passwords);
+            } else {
+                res.status(404).send({message: "No results."});
+            }
+        } else {
+            res.status(400).send({message: "Missing site in request payload."});
+        }
+    }
+
+    /**
+     *
+     * @param req {Request}
+     * @param res {Response}
+     * @returns {Promise<void>}
+     */
     static async post(req, res) {
         const {idUser} = req.body;
         const {site} = req.params;

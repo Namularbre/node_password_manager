@@ -12,6 +12,10 @@ passwordRouter
     .put(login, PasswordController.put);
 
 passwordRouter
+    .route('/search/:site')
+    .get(login, PasswordController.search);
+
+passwordRouter
     .route('/all/:idUser')
     .get(login, PasswordController.index);
 

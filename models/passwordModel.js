@@ -13,7 +13,7 @@ class PasswordModel {
         try {
             conn = await db.getConnection();
             result = conn.query(`
-                SELECT idPassword, site, password, idUser, idCategory
+                SELECT idPassword, site, password, idUser, idCategory, initialisationVector
                 FROM passwords
                 WHERE idUser = ?;
             `, [idUser]);
@@ -53,6 +53,33 @@ class PasswordModel {
         }
 
         return parseInt(row.insertId);
+    }
+
+    /**
+     *
+     * @param site {string}
+     * @param idUser {number}
+     * @returns {Promise<Object[]>}
+     */
+    static async search(site, idUser) {
+        let conn;
+        let results;
+
+        try {
+            conn = await db.getConnection();
+            results = await conn.query(`
+                SELECT idPassword, site, password, idCategory, initialisationVector
+                FROM passwords
+                WHERE site LIKE ? AND idUser = ?;
+            `, [`%${site}%`, idUser]);
+        } catch(error) {
+            console.error(error.message);
+            throw new Error('DB_ERROR');
+        } finally {
+            if (conn) await conn.release();
+        }
+
+        return results;
     }
 
     /**

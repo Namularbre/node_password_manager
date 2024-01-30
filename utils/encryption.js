@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 
 /**
- *
+ * Encrypt any plain text
  * @param password {string}
  * @returns {Promise<{initialisationVector: string, encryptedPassword: string}>}
  */
@@ -20,7 +20,7 @@ async function encrypt(password) {
 }
 
 /**
- *
+ * Decrypt an encrypted text
  * @param encryptedPassword {string}
  * @param initialisationVector {string}
  * @returns {Promise<string>}

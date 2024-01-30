@@ -1,5 +1,7 @@
 CREATE DATABASE password_manager;
 
+USE password_manager;
+
 CREATE TABLE `users` (
     `idUser` INT(11) NOT NULL AUTO_INCREMENT,
     `username` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_general_ci',

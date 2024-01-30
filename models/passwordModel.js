@@ -135,6 +135,33 @@ class PasswordModel {
 
         return (row.affectedRows !== 0);
     }
+
+    /**
+     *
+     * @param idPassword {number}
+     * @param idCategory {number}
+     * @returns {Promise<*>}
+     */
+    static async updateCategory(idPassword, idCategory) {
+        let conn;
+        let row;
+
+        try {
+            conn = await db.getConnection();
+            row = await conn.query(`
+                UPDATE passwords
+                SET idCategory = ?
+                WHERE idPassword = ?;
+            `, [idCategory, idPassword]);
+        } catch (error) {
+            console.error(error.message);
+            throw new Error('DB_ERROR');
+        } finally {
+            if (conn) await conn.release();
+        }
+
+        return (row.affectedRows !== 0);
+    }
 }
 
 module.exports = PasswordModel;

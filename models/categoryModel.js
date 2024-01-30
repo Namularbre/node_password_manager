@@ -101,6 +101,32 @@ class CategoryModel {
 
         return (row.affectedRows === 1);
     }
+
+    /**
+     * 
+     * @param name {string}
+     * @returns {Promise<Object[]>}
+     */
+    static async selectByName(name) {
+        let conn;
+        let results;
+
+        try {
+            conn = await db.getConnection();
+            results = await conn.query(`
+                SELECT idCategory, name
+                FROM categories
+                WHERE name = ?;
+            `, [name]);
+        } catch (error) {
+            console.error(error.message);
+            throw new Error('DB_ERROR');
+        } finally {
+            if (conn) await conn.release();
+        }
+
+        return results;
+    }
 }
 
 module.exports = CategoryModel;

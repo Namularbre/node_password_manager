@@ -1,6 +1,7 @@
 const PasswordModel = require('../models/passwordModel');
 const passwordGenerator = require("../utils/passwordGenerator");
 const {encrypt, decrypt} = require("../utils/encryption");
+const CategoryModel = require('../models/categoryModel');
 
 class PasswordController {
     /**
@@ -150,6 +151,34 @@ class PasswordController {
         }
     }
 
+    /**
+     *
+     * @param req {Request}
+     * @param res {Response}
+     * @returns {Promise<void>}
+     */
+    static async setCategory(req, res) {
+        const {name} = req.params;
+        const {idPassword} = req.body;
+
+        if (name && idPassword) {
+            try {
+                const category = await CategoryModel.selectByName(name);
+
+                if (category.length !== 0) {
+                    const update = await PasswordModel.updateCategory(idPassword, category[0].idCategory);
+                    res.send(update);
+                } else {
+                    res.status(404).send({message: "Category not found."});
+                }
+            } catch(error) {
+                console.error(error.message);
+                res.status(500).send({message: "Internal server error."});
+            }
+        } else {
+            res.status(400).send({message: "Missing site in request payload."});
+        }
+    }
 }
 
 module.exports = PasswordController;

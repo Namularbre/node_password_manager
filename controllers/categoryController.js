@@ -7,7 +7,7 @@ class CategoryController {
      * @param res {Response}
      * @returns {Promise<void>}
      */
-    static async get(req, res) {
+    static async getAll(req, res) {
         try {
             const categories = await CategoryModel.selectAll();
             res.send(categories);
@@ -79,6 +79,24 @@ class CategoryController {
         try {
             const update = await CategoryModel.delete(idCategory);
             res.send(update);
+        } catch(error) {
+            console.error(error.message);
+            res.status(500).send({message: 'Internal server error'});
+        }
+    }
+
+    /**
+     *
+     * @param req {Request}
+     * @param res {Response}
+     * @returns {Promise<void>}
+     */
+    static async get(req, res) {
+        const {name} = req.params;
+
+        try {
+            const categories = await CategoryModel.selectByName(name);
+            res.send(categories);
         } catch(error) {
             console.error(error.message);
             res.status(500).send({message: 'Internal server error'});

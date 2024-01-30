@@ -15,4 +15,8 @@ passwordRouter
     .route('/all/:idUser')
     .get(login, PasswordController.index);
 
+passwordRouter
+    .route('/setCategory/:name')
+    .put(login, PasswordController.setCategory);
+
 module.exports = passwordRouter;

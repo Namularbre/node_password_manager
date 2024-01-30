@@ -15,6 +15,10 @@ categoryRouter
 
 categoryRouter
     .route('/all')
+    .get(login, CategoryController.getAll);
+
+categoryRouter
+    .route('/getByName/:name')
     .get(login, CategoryController.get);
 
 module.exports = categoryRouter;

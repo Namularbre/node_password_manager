@@ -163,14 +163,19 @@ class PasswordController {
 
         if (name && idPassword) {
             try {
-                const category = await CategoryModel.selectByName(name);
-
-                if (category.length !== 0) {
-                    const update = await PasswordModel.updateCategory(idPassword, category[0].idCategory);
-                    res.send(update);
+                let update;
+                if (name === "null") {
+                    update = await PasswordModel.updateCategory(idPassword, null);
                 } else {
-                    res.status(404).send({message: "Category not found."});
-                }
+                    const category = await CategoryModel.selectByName(name);
+
+                    if (category.length !== 0) {
+                        update = await PasswordModel.updateCategory(idPassword, category[0].idCategory);
+                    } else {
+                        res.status(404).send({message: "Category not found."});
+                    }
+                } 
+                res.send(update);
             } catch(error) {
                 console.error(error.message);
                 res.status(500).send({message: "Internal server error."});
